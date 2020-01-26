@@ -13,14 +13,14 @@ import androidx.room.Room;
 
 public class MainViewModel extends AndroidViewModel {
 
-    private AppDatabase appDatabase;
+    private LocalDatabase localDatabase;
     private ArrayList<MainItem> list;
     private MutableLiveData<List<MainItem>> liveData;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-        appDatabase = Room.databaseBuilder(application.getApplicationContext(),
-                AppDatabase.class, "database-name").build();
+        localDatabase = Room.databaseBuilder(application.getApplicationContext(),
+                LocalDatabase.class, "database-name").build();
     }
 
     public MutableLiveData<List<MainItem>> getLiveData() {
@@ -44,7 +44,7 @@ public class MainViewModel extends AndroidViewModel {
             public void run() {
                 MainItem item = new MainItem(text);
                 list.add(item);
-                appDatabase.mainItemDao().insertAll(item);
+                localDatabase.mainItemDao().insertAll(item);
                 liveData.postValue(list);
             }
         });
@@ -55,7 +55,7 @@ public class MainViewModel extends AndroidViewModel {
             @Override
             public void run() {
                 item.setChecked(!item.isChecked());
-                appDatabase.mainItemDao().update(item);
+                localDatabase.mainItemDao().update(item);
                 liveData.postValue(list);
             }
         });
@@ -66,7 +66,7 @@ public class MainViewModel extends AndroidViewModel {
             @Override
             public void run() {
                 list.remove(item);
-                appDatabase.mainItemDao().delete(item);
+                localDatabase.mainItemDao().delete(item);
                 liveData.postValue(list);
             }
         });
@@ -77,7 +77,7 @@ public class MainViewModel extends AndroidViewModel {
             @Override
             public void run() {
                 list = new ArrayList<>();
-                list.addAll(appDatabase.mainItemDao().getAll());
+                list.addAll(localDatabase.mainItemDao().getAll());
                 liveData.postValue(list);
             }
         });
