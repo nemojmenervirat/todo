@@ -54,7 +54,8 @@ public class MainFragment extends Fragment {
             @Override
             public void onChanged(List<MainItem> mainItems) {
                 // create adapter
-                mAdapter = new MainViewAdapter(getContext(), mViewModel.getItemsArray());
+                mAdapter = new MainViewAdapter(getContext(), mViewModel.getItems());
+                getResources().getColor(R.color.primaryLightColor);
                 mListView.setAdapter(mAdapter);
             }
         });

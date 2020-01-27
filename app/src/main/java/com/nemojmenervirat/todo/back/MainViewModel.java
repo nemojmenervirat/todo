@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -31,11 +32,11 @@ public class MainViewModel extends AndroidViewModel {
         return liveData;
     }
 
-    public MainItem[] getItemsArray() {
+    public List<MainItem> getItems() {
         if (liveData == null) {
-            return new MainItem[]{};
+            return Collections.emptyList();
         }
-        return liveData.getValue().toArray(new MainItem[liveData.getValue().size()]);
+        return liveData.getValue();
     }
 
     public void addItem(final String text) {
